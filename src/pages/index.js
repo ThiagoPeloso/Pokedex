@@ -42,14 +42,11 @@ export default function Home() {
   var pokemonName = formData.name
   var countryName = countryData.name
   
-  const searchClick = () => {
-    //const newURL = `http://localhost:3000/${universityName}`;
-
-    //window.history.pushState(null, '', newURL);
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}/`)
-    .then(response => response.text())
-    .then(text => console.log(text))
-};
+async function fetchPokemon(pokemon) {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`);
+  const pokemonData = await response.json();
+  console.log(pokemonData.abilities);
+}
   return (
     <>
       <Head>
@@ -85,7 +82,7 @@ export default function Home() {
               aria-label="Search"
               onChange={inputUniName}
             />
-            <Button variant="outline-success" onClick={searchClick}>Search</Button>
+            <Button variant="outline-success" onClick={() => fetchPokemon(pokemonName)}>Search</Button>
           </Form>
           </Nav>
         </Navbar.Collapse>
