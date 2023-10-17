@@ -10,7 +10,6 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +17,8 @@ export default function Home() {
   const [formData, setFormData] = useState({
     name: ""
   })
-  const handleInput = (e) => {
+
+  const inputUniName = (e) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
   
@@ -27,12 +27,26 @@ export default function Home() {
       [fieldName]: fieldValue
     }));
   }
-  const universityName = formData.name
-  const handleClick = () => {
-    const newURL = `http://localhost:3000/${universityName}`;
+  const [countryData, setCountryData] = useState({
+    name: ""
+  })
+  const inputCountryName = (e) => {
+    const fieldName = e.target.name;
+    const fieldValue = e.target.value;
+  
+    setCountryData((prevState) => ({
+      ...prevState,
+      [fieldName]: fieldValue
+    }));
+  }
+  var universityName = formData.name
+  var countryName = countryData.name
+  
+  const searchClick = () => {
+    //const newURL = `http://localhost:3000/${universityName}`;
 
-    window.history.pushState(null, '', newURL);
-    fetch(`http://universities.hipolabs.com/search?name=${universityName}&country=Brazil`)
+    //window.history.pushState(null, '', newURL);
+    fetch(`http://universities.hipolabs.com/search?name=${universityName}&country=${countryName}`)
     .then(response => response.text())
     .then(text => console.log(text))
 };
@@ -57,18 +71,30 @@ export default function Home() {
             <Form className="d-flex">
             <Form.Control
               type="search"
+              placeholder="Search a Country"
+              name="name"
+              className="me-2"
+              aria-label="Search"
+              onChange={inputCountryName}
+            />
+            <Form.Control
+              type="search"
               placeholder="Search a University"
               name="name"
               className="me-2"
               aria-label="Search"
-              onChange={handleInput}
+              onChange={inputUniName}
             />
-            <Button variant="outline-success" onClick={handleClick}>Search</Button>
+            <Button variant="outline-success" onClick={searchClick}>Search</Button>
           </Form>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    <div>
+    <label>Country Name: </label>
+      {countryName}
+    </div>
     <div>
     <label>University Name: </label>
       {universityName}
