@@ -39,14 +39,14 @@ export default function Home() {
       [fieldName]: fieldValue
     }));
   }
-  var universityName = formData.name
+  var pokemonName = formData.name
   var countryName = countryData.name
   
   const searchClick = () => {
     //const newURL = `http://localhost:3000/${universityName}`;
 
     //window.history.pushState(null, '', newURL);
-    fetch(`http://universities.hipolabs.com/search?name=${universityName}&country=${countryName}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}/`)
     .then(response => response.text())
     .then(text => console.log(text))
 };
@@ -97,7 +97,7 @@ export default function Home() {
     </div>
     <div>
     <label>University Name: </label>
-      {universityName}
+      {pokemonName}
     </div>
     </>
   )
