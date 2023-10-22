@@ -18,7 +18,7 @@ export default function Home() {
     name: ""
   })
 
-  const inputUniName = (e) => {
+  const inputPokemonName = (e) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
   
@@ -27,26 +27,14 @@ export default function Home() {
       [fieldName]: fieldValue
     }));
   }
-  const [countryData, setCountryData] = useState({
-    name: ""
-  })
-  const inputCountryName = (e) => {
-    const fieldName = e.target.name;
-    const fieldValue = e.target.value;
-  
-    setCountryData((prevState) => ({
-      ...prevState,
-      [fieldName]: fieldValue
-    }));
-  }
-  var pokemonName = formData.name
-  var countryName = countryData.name
-  
+
 async function fetchPokemon(pokemon) {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`);
   const pokemonData = await response.json();
-  console.log(pokemonData.abilities);
+  console.log(pokemonData);
 }
+var pokemonName = formData.name
+
   return (
     <>
       <Head>
@@ -68,19 +56,11 @@ async function fetchPokemon(pokemon) {
             <Form className="d-flex">
             <Form.Control
               type="search"
-              placeholder="Search a Country"
+              placeholder="Search a Pokémon"
               name="name"
               className="me-2"
               aria-label="Search"
-              onChange={inputCountryName}
-            />
-            <Form.Control
-              type="search"
-              placeholder="Search a University"
-              name="name"
-              className="me-2"
-              aria-label="Search"
-              onChange={inputUniName}
+              onChange={inputPokemonName}
             />
             <Button variant="outline-success" onClick={() => fetchPokemon(pokemonName)}>Search</Button>
           </Form>
@@ -89,12 +69,10 @@ async function fetchPokemon(pokemon) {
       </Container>
     </Navbar>
     <div>
-    <label>Country Name: </label>
-      {countryName}
-    </div>
-    <div>
-    <label>University Name: </label>
-      {pokemonName}
+    <label>Pokémon Name: </label>
+      {}
+      <label>Pokémon Abilities: </label>
+
     </div>
     </>
   )
