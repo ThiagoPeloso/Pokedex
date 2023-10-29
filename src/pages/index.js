@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Figure } from "react-bootstrap";
 import React, { useState, useEffect } from "react"
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true)
   
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/charizard`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/ursaluna`)
     .then((res) => res.json())
     .then((data) => {
       setData(data)
@@ -97,6 +97,7 @@ export default function Home() {
       )}
       </Row>
       </Container>
-    </>
+      </>
+
   )
 }
