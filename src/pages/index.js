@@ -14,9 +14,10 @@ import React, { useState, useEffect } from "react"
 export default function Home() {
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(true)
+  const [name, setName] = useState()
   
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/ursaluna`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/pikachu`)
     .then((res) => res.json())
     .then((data) => {
       setData(data)
@@ -25,14 +26,20 @@ export default function Home() {
     })
   }, [])
 
-  const inputPokemonName = (e) => {
-    const fieldName = e.target.searchName;
-    const fieldValue = e.target.searchValue;
+  function searchPokemon(){
+    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setData(data)
+      setLoading(false)
+      console.log(data)
+    })
+  }
 
-    setData((prevState) => ({
-      ...prevState,
-      [fieldName]: fieldValue
-    }));
+  const inputPokemonName = (e) => {
+    const fieldName = e.target.value
+    setName(fieldName)
+    console.log(fieldName)
   }
 
   if (isLoading) return <p>Loading...</p>
@@ -59,7 +66,7 @@ export default function Home() {
                   aria-label="Search"
                   onChange={inputPokemonName}
                 />
-                <Button variant="outline-success" onClick={() => useEffect(pokemonName)}>Search</Button>
+                <Button variant="outline-success" onClick={() => searchPokemon()}>Search</Button>
               </Form>
             </Nav>
           </Navbar.Collapse>
