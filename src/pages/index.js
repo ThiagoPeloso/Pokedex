@@ -17,7 +17,7 @@ export default function Home() {
   const [name, setName] = useState()
   
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/pikachu`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/1`)
     .then((res) => res.json())
     .then((data) => {
       setData(data)
@@ -27,19 +27,18 @@ export default function Home() {
   }, [])
 
   function searchPokemon(){
-    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
-    .then((res) => res.json())
-    .then((data) => {
-      setData(data)
-      setLoading(false)
-      console.log(data)
-    })
+      fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        setLoading(false)
+        console.log(data)
+      })
   }
 
   const inputPokemonName = (e) => {
     const fieldName = e.target.value
     setName(fieldName)
-    console.log(fieldName)
   }
 
   if (isLoading) return <p>Loading...</p>
