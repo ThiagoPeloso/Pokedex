@@ -56,7 +56,7 @@ export default function Home() {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <Form className="d-flex">
+              <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
                 <Form.Control
                   type="search"
                   placeholder="Search a Pokémon"
@@ -64,6 +64,11 @@ export default function Home() {
                   className="me-2"
                   aria-label="Search"
                   onChange={inputPokemonName}
+                  onKeyDown={(e)=>{
+                    if(e.keyCode === 13){
+                      searchPokemon()
+                    }
+                  }}
                 />
                 <Button variant="outline-success" onClick={() => searchPokemon()}>Search</Button>
               </Form>
