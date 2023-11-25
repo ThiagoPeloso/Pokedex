@@ -15,19 +15,19 @@ export default function Home() {
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(true)
   const [name, setName] = useState()
-  
+
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/1`)
-    .then((res) => res.json())
-    .then((data) => {
-      setData(data)
-      setLoading(false)
-      console.log(data)
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        setLoading(false)
+        console.log(data)
+      })
   }, [])
 
-  function searchPokemon(){
-      fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
+  function searchPokemon() {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data)
@@ -46,7 +46,7 @@ export default function Home() {
 
   return (
     <>
-    <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="bg-body-tertiary">
         <Container fluid>
           <Navbar.Brand href="#">Pokédex Search</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -64,8 +64,8 @@ export default function Home() {
                   className="me-2"
                   aria-label="Search"
                   onChange={inputPokemonName}
-                  onKeyDown={(e)=>{
-                    if(e.keyCode === 13){
+                  onKeyDown={(e) => {
+                    if (e.keyCode === 13) {
                       searchPokemon()
                     }
                   }}
@@ -77,38 +77,43 @@ export default function Home() {
         </Container>
       </Navbar>
 
-      <Container>
-      <Row>
-      <Col><Image src={data.sprites.other['official-artwork'].front_default}/></Col>
-      </Row>
-      <Row>
-        <Col xs lg="3">Name: {data.name.charAt(0).toUpperCase()+data.name.substr(1)}</Col>
-      </Row>
-      <Row>
-        <Col xs lg="3">Dex Number: {data.id}</Col>
-      </Row>
-      <Row>
-      <Col xs={1} lg={1}>Abilities: </Col>
-      {data.abilities.map((abilities) =>
-      <Col xs={2} lg={2} key={abilities.slot}>{abilities.ability.name}</Col>
-      )}
-      </Row>
-      <Row>
-      <Col xs={1} lg={1}>Types: </Col>
-      {data.types.map((types) =>
-      <Col xs={1} lg={1} key={types.slot}>{types.type.name}</Col>
-      )}
-      </Row>
-      <Row>
-        <Col xs={1} lg={1}>Stats: </Col>
-      </Row>
-      <Row>
-        {data.stats.map((stats) =>
-        <Col xs={2} lg={2}>{stats.stat.name}: {stats.base_stat}</Col>
-      )}
-      </Row>
+      <Container id="card">
+        <div id="cardFilling">
+          <Image id="image" src={data.sprites.other['official-artwork'].front_default} />
+          <div id="text">
+            <div id="nameAndDex">
+              <div id="name">
+                {data.name.charAt(0).toUpperCase() + data.name.substr(1)}
+              </div>
+              <div id="dex">
+                #{data.id}
+              </div>
+            </div>
+            <div id="typesAndAbilities">
+            <div id="types">
+              {data.types.map((types) =>
+                <div key={types.slot}>{types.type.name}</div>
+              )}
+            </div>
+            <div id="abilities">
+              {data.abilities.map((abilities) =>
+                <div key={abilities.slot}>
+                  {abilities.ability.name}
+                </div>
+              )}
+            </div>
+            </div>
+            <div id="stats">
+              {data.stats.map((stats) =>
+                <div>
+                  {stats.stat.name}:{stats.base_stat}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </Container>
-      </>
+    </>
 
   )
 }
