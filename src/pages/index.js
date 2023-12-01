@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import ListGroup from 'react-bootstrap/ListGroup';
 import { Row, Col, Container, Figure } from "react-bootstrap";
 import React, { useState, useEffect } from "react"
 
@@ -81,33 +82,33 @@ export default function Home() {
         <div id="cardFilling">
           <Image id="image" src={data.sprites.other['official-artwork'].front_default} />
           <div id="text">
-            <div id="nameAndDex">
-              <div id="name">
+            <ListGroup horizontal id="nameAndDex">
+              <ListGroup.Item id="name">
                 {data.name.charAt(0).toUpperCase() + data.name.substr(1)}
-              </div>
-              <div id="dex">
+              </ListGroup.Item>
+              <ListGroup.Item id="dex">
                 #{data.id}
-              </div>
-            </div>
+              </ListGroup.Item>
+            </ListGroup>
             <div id="typesAndAbilities">
-            <div id="types">
+            <ListGroup id="types">
               {data.types.map((types) =>
-                <div key={types.slot}>{types.type.name}</div>
+                <ListGroup.Item id="type" key={types.slot}>{types.type.name}</ListGroup.Item>
               )}
-            </div>
-            <div id="abilities">
+            </ListGroup>
+            <ListGroup id="abilities">
               {data.abilities.map((abilities) =>
-                <div key={abilities.slot}>
+                <ListGroup.Item id="ability" key={abilities.slot}>
                   {abilities.ability.name}
-                </div>
+                </ListGroup.Item>
               )}
-            </div>
+            </ListGroup>
             </div>
             <div id="stats">
               {data.stats.map((stats) =>
-                <div>
-                  {stats.stat.name}:{stats.base_stat}
-                </div>
+                <ListGroup>
+                  <ListGroup.Item id="stat">{stats.stat.name}: {stats.base_stat}</ListGroup.Item>
+                </ListGroup>
               )}
             </div>
           </div>

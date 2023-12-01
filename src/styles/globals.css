@@ -111,24 +111,22 @@ a {
 }
 
 #text {
-  width: 65%;
 }
 
 #nameAndDex {
   display: flex;
-  background-color: #00000010;
-  width: 15%;
   margin-left: 15%;
   margin-top: 10%;
 }
 
 #name {
-  background-color: #00000020;
+  background-color: #00000070;
+  color: white;
 }
 
 #dex {
-  background-color: #00000030;
-  margin-left: 150%;
+  background-color: #00000070;
+  color: white;
 }
 
 #typesAndAbilities {
@@ -138,26 +136,35 @@ a {
 }
 
 #types {
-  background-color: #00000050;
   display: flex;
   flex-direction: column;
-  width: 15%;
 
+}
+
+#type{
+  background-color: #00000070;
+  color: white;
 }
 
 #abilities {
-  background-color: #00000060;
   display: flex;
   flex-direction: column;
-  width: 15%;
   margin-left: 25%;
 }
 
-#stats {
+#ability{
   background-color: #00000070;
+  color: white;
+}
+
+#stats {
   display: flex;
   flex-direction: column;
-  width: 30%;
   margin-top: 7.5%;
   margin-left: 10%;
+}
+
+#stat{
+  background-color: #00000070;
+  color: white;
 }
