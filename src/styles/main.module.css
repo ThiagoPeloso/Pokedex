@@ -1,0 +1,75 @@
+#card {
+  background-color: lightgray;
+}
+
+#cardFilling {
+  display: flex;
+  background-color: gray;
+}
+
+#image {
+  background-color: black;
+  width: 30%;
+  height: 30%;
+  margin-left: 5%;
+  margin-top: 7.5%;
+}
+
+#text {
+}
+
+#nameAndDex {
+  display: flex;
+  margin-left: 15%;
+  margin-top: 10%;
+}
+
+#name {
+  background-color: #00000070;
+  color: white;
+}
+
+#dex {
+  background-color: #00000070;
+  color: white;
+}
+
+#typesAndAbilities {
+  display: flex;
+  margin-left: 15%;
+  margin-top: 10%;
+}
+
+#types {
+  display: flex;
+  flex-direction: column;
+
+}
+
+#type{
+  background-color: #00000070;
+  color: white;
+}
+
+#abilities {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25%;
+}
+
+#ability{
+  background-color: #00000070;
+  color: white;
+}
+
+#stats {
+  display: flex;
+  flex-direction: column;
+  margin-top: 7.5%;
+  margin-left: 10%;
+}
+
+#stat{
+  background-color: #00000070;
+  color: white;
+}

@@ -1,8 +1,7 @@
+import styles from '@/styles/main.module.css'
 import Head from 'next/head'
 import Image from 'react-bootstrap/Image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -10,58 +9,82 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Row, Col, Container, Figure } from "react-bootstrap";
+
 import React, { useState, useEffect } from "react"
 
 export default function Home() {
   const [data, setData] = useState(null)
-  const [isLoading, setLoading] = useState(true)
-  const [name, setName] = useState()
+  const [name, setName] = useState("")
+  const [pokemonList, setPokemonList] = useState([])
+  const [filteredPokemon, setFilteredPokemon] = useState([])
 
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/1`)
       .then((res) => res.json())
       .then((data) => {
         setData(data)
-        setLoading(false)
         console.log(data)
       })
   }, [])
 
+  useEffect(() => {
+  fetch("https://pokeapi.co/api/v2/pokemon?limit=1025")
+    .then((res) => res.json())
+    .then((data) => {
+      setPokemonList(data.results)
+    })
+}, [])
+
   function searchPokemon() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
-      .then((res) => res.json())
+    fetch(`https://pokeapi.co/api/v2/pokemon/${filteredPokemon[0].name}`)
+      .then((res) => {
+      if (!res.ok) {
+        throw new Error("What? I don't know that one.")
+      }
+      return res.json()
+      })
       .then((data) => {
         setData(data)
-        setLoading(false)
-        console.log(data)
+        setFilteredPokemon([])
+        console.log(filteredPokemon[0].name)
+      })
+      .catch((err) => {
+        alert(err.message)
       })
   }
 
   const inputPokemonName = (e) => {
-    const fieldName = e.target.value
-    setName(fieldName)
+  const fieldName = e.target.value
+  setName(fieldName)
+  const rawName = fieldName.toLowerCase()
+  if (rawName === "") {
+    setFilteredPokemon([])
+    return
   }
+  const matches = pokemonList.filter((pokemon) => pokemon.name.includes(rawName))
+  setFilteredPokemon(matches.slice(0, 5))
+}
 
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No profile data</p>
+  if (!data) return <p>Error!</p>
 
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container fluid>
           <Navbar.Brand href="#">Pokédex Search</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
+            <div style={{ position: "relative"}}>
               <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
                 <Form.Control
                   type="search"
+                  value={name}
                   placeholder="Search a Pokémon"
                   name="name"
+                  autoComplete="off"
                   className="me-2"
                   aria-label="Search"
                   onChange={inputPokemonName}
@@ -73,8 +96,39 @@ export default function Home() {
                 />
                 <Button variant="outline-success" onClick={() => searchPokemon()}>Search</Button>
               </Form>
+              <ListGroup
+                style={{
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                width: "100%",
+                zIndex: 1000,
+                maxHeight: "300px",
+                overflowY: "auto",
+                boxShadow: "0 4px 10px rgba(0,0,0,0.2)"
+                }}
+              >
+                {filteredPokemon.map((pokemon) => (
+                  <ListGroup.Item
+                    action
+                    key={pokemon.name}
+                    onClick={() => {
+                      setName(pokemon.name)
+                      setFilteredPokemon([])
+
+                      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+                        .then((res) => res.json())
+                        .then((data) => {
+                          setData(data)
+                        })
+                    }}
+                  >
+                    {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+              </ListGroup.Item>
+                ))}
+              </ListGroup>
+            </div>
             </Nav>
-          </Navbar.Collapse>
         </Container>
       </Navbar>
 
