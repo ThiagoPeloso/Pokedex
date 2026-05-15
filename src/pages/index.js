@@ -20,23 +20,23 @@ export default function Home() {
 
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/1`)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data)
-        console.log(data)
-      })
+    .then((res) => res.json())
+    .then((data) => {
+      setData(data)
+      console.log(data)
+    })
   }, [])
 
   useEffect(() => {
-  fetch("https://pokeapi.co/api/v2/pokemon?limit=1025")
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=1025")
     .then((res) => res.json())
     .then((data) => {
       setPokemonList(data.results)
     })
-}, [])
+  }, [])
 
   function searchPokemon() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${filteredPokemon[0].name}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
       .then((res) => {
       if (!res.ok) {
         throw new Error("What? I don't know that one.")
@@ -46,7 +46,7 @@ export default function Home() {
       .then((data) => {
         setData(data)
         setFilteredPokemon([])
-        console.log(filteredPokemon[0].name)
+        console.log(name)
       })
       .catch((err) => {
         alert(err.message)
